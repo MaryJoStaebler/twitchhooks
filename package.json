@@ -8,5 +8,15 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaryJoStaebler/twitchhooks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MaryJoStaebler/twitchhooks/issues"
+  },
+  "homepage": "https://github.com/MaryJoStaebler/twitchhooks#readme"
 }

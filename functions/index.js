@@ -35,7 +35,7 @@ app.post('/', async (req,res) => {
     }
 
     const follower = req.body.data[0];
-    console.log(follower);
+    follower.date = Date.now();
     await admin.firestore().collection('followers').doc(follower.from_name).set(follower);
     res.status(201).send();
 });
@@ -52,14 +52,13 @@ app.get('/', async (req,res) => {
 });
 
 app.get('/:numOf', async(req,res) => {
-    const snapshot = await admin.firestore().collection('followers').limit(req.params.numOf).get();
-    console.log(req.params.numOf);
-    console.log(snapshot);
+    const snapshot = await admin.firestore().collection('followers').limit(parseInt(req.params.numOf)).get();
+
     let followers = [];
     snapshot.forEach(follower => {
         let id = follower.id;
         let data = follower.data();
-        followers.push({id,...data});
+        followers.push({id, ...data});
     });
 
     res.status(200).send(JSON.stringify(followers));
@@ -114,7 +113,6 @@ async function getStreamer() {
     });
 
     const user = await response.json();
-    console.log(user.data[0]);
     await admin.firestore().collection('twitchOAuth').doc('streamer').set(user.data[0]);
 
     return user.data[0];
@@ -130,22 +128,19 @@ startHookServer.get('/',async(req,res) => {
     headers['Content-Type'] = 'application/json';
 
     let user = await getStreamer();
-    console.log(user);
     let fetch = require('node-fetch');
     const body = {
        'hub.secret':functions.config().twitchapi.signsecret,
         'hub.lease_seconds':86400,
         'hub.topic':`https://api.twitch.tv/helix/users/follows?first=1&to_id=${user.id}`,
-        'hub.callback':'https://abfefb0c1252.ngrok.io/twitchhooks-6666e/us-central1/followers',
+        'hub.callback':`${functions.config().twitchapi.serverurl}/twitchhooks-6666e/us-central1/followers`,
         'hub.mode':'subscribe'
     };
-    console.log(body);
     const response = await fetch('https://api.twitch.tv/helix/webhooks/hub', {
         method:'post',
         body:JSON.stringify(body),
         headers: headers
     });
-    console.log(response);
 
     res.send(response.statusCode);
 
