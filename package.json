@@ -8,10 +8,6 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "dotenv": "^8.2.0",
-    "date-and-time": ">=0.14.2"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MaryJoStaebler/twitchhooks.git"
