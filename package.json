@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MaryJoStaebler/twitchhooks/issues"
   },
-  "homepage": "https://github.com/MaryJoStaebler/twitchhooks#readme"
+  "homepage": "https://github.com/MaryJoStaebler/twitchhooks#readme",
+  "devDependencies": {
+    "date-and-time": "^0.14.2"
+  }
 }
